@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+    <meta charset="utf-8">
+    <title>Duckys Mansion</title>
+    <meta name="Mansion" content="Mansion">
+    <script src="https://aframe.io/releases/0.7.0/aframe.min.js"></script>
+    <script src="https://sdk.altvr.com/libs/altspace.js/2.9.0/altspace.js"></script>
+    <script src="https://cdn.rawgit.com/norybiak/Aframe-gltf/v0.1.2/dist/aframe-gltf.js"></script>
+    <script src="bake-vertex-light.js"></script>
+    <script src="bake-vertex-light2.js"></script>
+    <script src="bake-vertex-light3.js"></script>
+    <script src="cached-model.js"></script>
+
+</head>
+  <body>
+
+    <a-scene altspace="verticalAlign: middle; fullspace: true" vr-mode-ui="enabled: false"> 
+
+      <!-- Asset Loading -->
+      <a-assets> 
+
+
+      <a-asset-item id="rol-mtl" src="rol.mtl"></a-asset-item>
+
+      <a-asset-item id="rol-obj" src="rol.obj"></a-asset-item>
+
+      <a-asset-item id="tree-mtl" src="tree.mtl"></a-asset-item>
+
+      <a-asset-item id="tree-obj" src="tree.obj"></a-asset-item>
+
+      <a-asset-item id="temp-mtl" src="temp.mtl"></a-asset-item>
+
+      <a-asset-item id="temp-obj" src="temp.obj"></a-asset-item>
+
+      <a-asset-item id="temp2-obj" src="temp2.obj"></a-asset-item>
+
+      <img id="sky" src="sky1.jpg"/>
+
+      </a-assets>
+
+      <a-entity camera position="0 10 0" wasd-controls="fly: true" look-controls></a-entity>
+        <a-light id="light1" type="directional" intensity="15000" position="-300 100 60"></a-light>
+        <!--a-light id="light1" type="directional" intensity="4500" position="-300 100 60"></a-light-->
+        <!--a-entity id="s1" geometry="primitive: sphere; buffer: false;" material="color: blue; shader: flat" position="-200 52 200" bake-vertex-light></a-entity-->
+        <a-light id="light2" type="directional" intensity="3500" position="-102.9 6 -210"></a-light>
+        <!--a-entity id="s2" geometry="primitive: sphere; buffer: false;" material="color: blue; shader: flat" position="-102.9 6 -210" bake-vertex-light></a-entity-->
+        <a-light id="light3" type="directional" intensity="42500" position="-500 715 400"></a-light>
+        
+      
+
+      <a-entity position="-102.9 0 -139.63">
+
+      <!--a-gltf-model scale="4 4 4" src="rol.gltf" position="0 0 0" rotation="0 0 0" n-mesh-collider="type: environment; convex: false"></a-gltf-model-->
+      
+      <a-entity cached-obj-model="obj: url(temp.obj); mtl: url(temp.mtl)" scale="4 4 4" position="0 0 0" n-mesh-collider="type: environment; convex: false" geometry="buffer: false" bake-vertex-light></a-entity>
+      <a-entity cached-obj-model="obj: url(temp2.obj); mtl: url(temp.mtl)" scale="4 4 4" position="0 0 0" n-mesh-collider="type: environment; convex: false" geometry="buffer: false" bake-vertex-light2></a-entity>
+      <a-obj-model scale="4 4 4" src="#rol-obj" color="white" position="0 0 0" rotation="0 0 0" opacity="0.005" n-mesh-collider="type: environment; convex: false" altspace-cursor-collider="enabled: false"></a-obj-model>
+
+      <a-box scale="25 0.1 25" position="0 3.75 -90" color="blue" opacity="0.3" altspace-cursor-collider="enabled: false"></a-box>
+
+      <!--a-entity geometry="primitive:plane;" scale="80 135 80" position="-15 30 -167.5" rotation="-30 0 0" material="shader:gif;src:url(fall.gif);transparent:true;color:#fff;opacity:0.75"></a-entity-->
+
+      <!--a-entity id="en1" position="29.75 8.5 -54" rotation="0 -90 0" scale="12 12 12" n-layout-browser="url: http://duckluck.net/portal/"></a-entity-->
+      <a-entity id="en2" position="-29.75 8.5 -54" rotation="0 90 0" scale="12 12 12" n-layout-browser="url: http://duckluck.net/yt"></a-entity>
+
+      <a-entity position="8 5.75 -70" rotation="0 -90 0" scale="5 5 5" n-layout-browser="url: http://duckluck.net/portal/; isEnclosure:true"></a-entity>
+      <a-entity position="-8 13.25 -70" rotation="0 90 0" scale="20 20 20" n-layout-browser="url: http://duckluck.net/portal/; isEnclosure:true"></a-entity>
+      <!--a-entity position="-7.5 6 -10" rotation="0 90 0" scale="5 5 5" n-layout-browser="url: http://duckluck.net/portal/; isEnclosure:true"></a-entity-->
+
+      <a-entity position="0 0 0">
+      <a-entity position="1 5.5 -1" rotation="0 90 0" scale="1 1.2 1">
+       <a-entity id="door1open" position="0 0 0" n-box-collider="isTrigger:true; type:environment; size: 2 3 2" n-container="capacity:1" wire="on: container-full; emit: door1b; targets: #door1a"></a-entity>
+       <a-entity id="door1close" position="0 0 0" n-box-collider="isTrigger:true; type:environment; size: 2 3 2" n-container="capacity:1" wire="on: container-empty; emit: door1r; targets: #door1a"></a-entity>
+       <a-entity id="door1soundopencontainer" position="0 0 0" n-box-collider="isTrigger:true; type:environment; size: 2 3 2" n-container="capacity:1" wire="on: container-full; emit: door1soundopentrigger; targets: #door1soundopen"></a-entity>
+       <a-entity id="door1soundclosecontainer" position="0 0 0" n-box-collider="isTrigger:true; type:environment; size: 2 3 2" n-container="capacity:1" wire="on: container-empty; emit: door1soundclosetrigger; targets: #door1soundclose"></a-entity>
+       <a-box id="door1a" color="white" opacity="0.005" scale="0.1 3 2" position="0 -0.25 0" n-mesh-collider="type: environment; convex: false">
+        <a-animation attribute="position" begin="door1b" dur="1500" easing="linear" repeat="0" fill="forwards" from="0 0 0" to="0 0 1.8"></a-animation>
+        <a-animation attribute="position" begin="door1r" delay="100" dur="1500" easing="linear" repeat="0" fill="forwards" from="0 0 1.8" to="0 0 0"></a-animation>
+       </a-box>
+       <a-entity id="door1soundopen" position="0 0 0" n-sound="src: dooropen.wav; on: door1soundopentrigger; rolloff: logarithmic; minDistance: 1; maxDistance: 300" sync="own-on: door1soundopentrigger" sync-n-sound></a-entity>
+       <a-entity id="door1soundclose" position="0 0 0" n-sound="src: dooropen.wav; on: door1soundclosetrigger; rolloff: logarithmic; minDistance: 1; maxDistance: 300" sync="own-on: door1soundclosetrigger" sync-n-sound></a-entity>
+      </a-entity>
+
+      <a-entity position="-1 5.5 -1" rotation="0 -90 0" scale="1 1.2 1">
+       <a-entity id="door2open" position="0 0 0" n-box-collider="isTrigger:true; type:environment; size: 2 3 2" n-container="capacity:1" wire="on: container-full; emit: door2b; targets: #door2a"></a-entity>
+       <a-entity id="door2close" position="0 0 0" n-box-collider="isTrigger:true; type:environment; size: 2 3 2" n-container="capacity:1" wire="on: container-empty; emit: door2r; targets: #door2a"></a-entity>
+       <a-entity id="door2soundopencontainer" position="0 0 0" n-box-collider="isTrigger:true; type:environment; size: 2 3 2" n-container="capacity:1" wire="on: container-full; emit: door2soundopentrigger; targets: #door2soundopen"></a-entity>
+       <a-entity id="door2soundclosecontainer" position="0 0 0" n-box-collider="isTrigger:true; type:environment; size: 2 3 2" n-container="capacity:1" wire="on: container-empty; emit: door2soundclosetrigger; targets: #door2soundclose"></a-entity>
+       <a-box id="door2a" color="white" opacity="0.005" scale="0.1 3 2" position="0 -0.25 0" n-mesh-collider="type: environment; convex: false">
+        <a-animation attribute="position" begin="door2b" dur="1500" easing="linear" repeat="0" fill="forwards" from="0 0 0" to="0 0 1.8"></a-animation>
+        <a-animation attribute="position" begin="door2r" delay="100" dur="1500" easing="linear" repeat="0" fill="forwards" from="0 0 1.8" to="0 0 0"></a-animation>
+       </a-box>
+       <a-entity id="door2soundopen" position="0 0 0" n-sound="src: dooropen.wav; on: door2soundopentrigger; rolloff: logarithmic; minDistance: 1; maxDistance: 300" sync="own-on: door2soundopentrigger" sync-n-sound></a-entity>
+       <a-entity id="door2soundclose" position="0 0 0" n-sound="src: dooropen.wav; on: door2soundclosetrigger; rolloff: logarithmic; minDistance: 1; maxDistance: 300" sync="own-on: door2soundclosetrigger" sync-n-sound></a-entity>
+      </a-entity>
+      </a-entity>
+
+      <a-entity position="33 0 -33.35" rotation="0 90 0">
+      <a-entity position="1 5.5 -1" rotation="0 90 0" scale="1 1.2 1">
+       <a-entity id="door3open" position="0 0 0" n-box-collider="isTrigger:true; type:environment; size: 2 3 2" n-container="capacity:1" wire="on: container-full; emit: door3b; targets: #door3a"></a-entity>
+       <a-entity id="door3close" position="0 0 0" n-box-collider="isTrigger:true; type:environment; size: 2 3 2" n-container="capacity:1" wire="on: container-empty; emit: door3r; targets: #door3a"></a-entity>
+       <a-entity id="door3soundopencontainer" position="0 0 0" n-box-collider="isTrigger:true; type:environment; size: 2 3 2" n-container="capacity:1" wire="on: container-full; emit: door3soundopentrigger; targets: #door3soundopen"></a-entity>
+       <a-entity id="door3soundclosecontainer" position="0 0 0" n-box-collider="isTrigger:true; type:environment; size: 2 3 2" n-container="capacity:1" wire="on: container-empty; emit: door3soundclosetrigger; targets: #door3soundclose"></a-entity>
+       <a-box id="door3a" color="white" opacity="0.005" scale="0.1 3 2" position="0 -0.25 0" n-mesh-collider="type: environment; convex: false">
+        <a-animation attribute="position" begin="door3b" dur="1500" easing="linear" repeat="0" fill="forwards" from="0 0 0" to="0 0 1.8"></a-animation>
+        <a-animation attribute="position" begin="door3r" delay="100" dur="1500" easing="linear" repeat="0" fill="forwards" from="0 0 1.8" to="0 0 0"></a-animation>
+       </a-box>
+       <a-entity id="door3soundopen" position="0 0 0" n-sound="src: dooropen.wav; on: door3soundopentrigger; rolloff: logarithmic; minDistance: 1; maxDistance: 300" sync="own-on: door3soundopentrigger" sync-n-sound></a-entity>
+       <a-entity id="door3soundclose" position="0 0 0" n-sound="src: dooropen.wav; on: door3soundclosetrigger; rolloff: logarithmic; minDistance: 1; maxDistance: 300" sync="own-on: door3soundclosetrigger" sync-n-sound></a-entity>
+      </a-entity>
+
+      <a-entity position="-1 5.5 -1" rotation="0 -90 0" scale="1 1.2 1">
+       <a-entity id="door4open" position="0 0 0" n-box-collider="isTrigger:true; type:environment; size: 2 3 2" n-container="capacity:1" wire="on: container-full; emit: door4b; targets: #door4a"></a-entity>
+       <a-entity id="door4close" position="0 0 0" n-box-collider="isTrigger:true; type:environment; size: 2 3 2" n-container="capacity:1" wire="on: container-empty; emit: door4r; targets: #door4a"></a-entity>
+       <a-entity id="door4soundopencontainer" position="0 0 0" n-box-collider="isTrigger:true; type:environment; size: 2 3 2" n-container="capacity:1" wire="on: container-full; emit: door4soundopentrigger; targets: #door4soundopen"></a-entity>
+       <a-entity id="door4soundclosecontainer" position="0 0 0" n-box-collider="isTrigger:true; type:environment; size: 2 3 2" n-container="capacity:1" wire="on: container-empty; emit: door4soundclosetrigger; targets: #door4soundclose"></a-entity>
+       <a-box id="door4a" color="white" opacity="0.005" scale="0.1 3 2" position="0 -0.25 0" n-mesh-collider="type: environment; convex: false">
+        <a-animation attribute="position" begin="door4b" dur="1500" easing="linear" repeat="0" fill="forwards" from="0 0 0" to="0 0 1.8"></a-animation>
+        <a-animation attribute="position" begin="door4r" delay="100" dur="1500" easing="linear" repeat="0" fill="forwards" from="0 0 1.8" to="0 0 0"></a-animation>
+       </a-box>
+       <a-entity id="door4soundopen" position="0 0 0" n-sound="src: dooropen.wav; on: door4soundopentrigger; rolloff: logarithmic; minDistance: 1; maxDistance: 300" sync="own-on: door4soundopentrigger" sync-n-sound></a-entity>
+       <a-entity id="door4soundclose" position="0 0 0" n-sound="src: dooropen.wav; on: door4soundclosetrigger; rolloff: logarithmic; minDistance: 1; maxDistance: 300" sync="own-on: door4soundclosetrigger" sync-n-sound></a-entity>
+      </a-entity>
+      </a-entity>
+
+      <a-entity position="-31 0 -33.35" rotation="0 90 0">
+      <a-entity position="1 5.5 -1" rotation="0 90 0" scale="1 1.2 1">
+       <a-entity id="door5open" position="0 0 0" n-box-collider="isTrigger:true; type:environment; size: 2 3 2" n-container="capacity:1" wire="on: container-full; emit: door5b; targets: #door5a"></a-entity>
+       <a-entity id="door5close" position="0 0 0" n-box-collider="isTrigger:true; type:environment; size: 2 3 2" n-container="capacity:1" wire="on: container-empty; emit: door5r; targets: #door5a"></a-entity>
+       <a-entity id="door5soundopencontainer" position="0 0 0" n-box-collider="isTrigger:true; type:environment; size: 2 3 2" n-container="capacity:1" wire="on: container-full; emit: door5soundopentrigger; targets: #door5soundopen"></a-entity>
+       <a-entity id="door5soundclosecontainer" position="0 0 0" n-box-collider="isTrigger:true; type:environment; size: 2 3 2" n-container="capacity:1" wire="on: container-empty; emit: door5soundclosetrigger; targets: #door5soundclose"></a-entity>
+       <a-box id="door5a" color="white" opacity="0.005" scale="0.1 3 2" position="0 -0.25 0" n-mesh-collider="type: environment; convex: false">
+        <a-animation attribute="position" begin="door5b" dur="1500" easing="linear" repeat="0" fill="forwards" from="0 0 0" to="0 0 1.8"></a-animation>
+        <a-animation attribute="position" begin="door5r" delay="100" dur="1500" easing="linear" repeat="0" fill="forwards" from="0 0 1.8" to="0 0 0"></a-animation>
+       </a-box>
+       <a-entity id="door5soundopen" position="0 0 0" n-sound="src: dooropen.wav; on: door5soundopentrigger; rolloff: logarithmic; minDistance: 1; maxDistance: 300" sync="own-on: door5soundopentrigger" sync-n-sound></a-entity>
+       <a-entity id="door5soundclose" position="0 0 0" n-sound="src: dooropen.wav; on: door5soundclosetrigger; rolloff: logarithmic; minDistance: 1; maxDistance: 300" sync="own-on: door5soundclosetrigger" sync-n-sound></a-entity>
+      </a-entity>
+
+      <a-entity position="-1 5.5 -1" rotation="0 -90 0" scale="1 1.2 1">
+       <a-entity id="door6open" position="0 0 0" n-box-collider="isTrigger:true; type:environment; size: 2 3 2" n-container="capacity:1" wire="on: container-full; emit: door6b; targets: #door6a"></a-entity>
+       <a-entity id="door6close" position="0 0 0" n-box-collider="isTrigger:true; type:environment; size: 2 3 2" n-container="capacity:1" wire="on: container-empty; emit: door6r; targets: #door6a"></a-entity>
+       <a-entity id="door6soundopencontainer" position="0 0 0" n-box-collider="isTrigger:true; type:environment; size: 2 3 2" n-container="capacity:1" wire="on: container-full; emit: door6soundopentrigger; targets: #door6soundopen"></a-entity>
+       <a-entity id="door6soundclosecontainer" position="0 0 0" n-box-collider="isTrigger:true; type:environment; size: 2 3 2" n-container="capacity:1" wire="on: container-empty; emit: door6soundclosetrigger; targets: #door6soundclose"></a-entity>
+       <a-box id="door6a" color="white" opacity="0.005" scale="0.1 3 2" position="0 -0.25 0" n-mesh-collider="type: environment; convex: false">
+        <a-animation attribute="position" begin="door6b" dur="1500" easing="linear" repeat="0" fill="forwards" from="0 0 0" to="0 0 1.8"></a-animation>
+        <a-animation attribute="position" begin="door6r" delay="100" dur="1500" easing="linear" repeat="0" fill="forwards" from="0 0 1.8" to="0 0 0"></a-animation>
+       </a-box>
+       <a-entity id="door6soundopen" position="0 0 0" n-sound="src: dooropen.wav; on: door6soundopentrigger; rolloff: logarithmic; minDistance: 1; maxDistance: 300" sync="own-on: door6soundopentrigger" sync-n-sound></a-entity>
+       <a-entity id="door6soundclose" position="0 0 0" n-sound="src: dooropen.wav; on: door6soundclosetrigger; rolloff: logarithmic; minDistance: 1; maxDistance: 300" sync="own-on: door6soundclosetrigger" sync-n-sound></a-entity>
+      </a-entity>
+      </a-entity>
+
+<!--a-entity cached-obj-model="obj: url(tree.obj); mtl: url(tree.mtl)" scale="7 7 7" position="20 0 20" n-mesh-collider="type: environment; convex: false" geometry="buffer: false" bake-vertex-light></a-entity-->
+      <a-entity id="thetree" cached-obj-model="obj:url(tree.obj);mtl:url(tree.mtl)" scale="7 7 7" rotation="0 25 0" position="37.07 0 40.05"  wire="on: click; emit: go; targets: #door6open" altspace-cursor-collider="enabled: true" geometry="buffer: false" bake-vertex-light></a-entity>
+<a-entity cached-obj-model="obj:url(tree.obj);mtl:url(tree.mtl)" scale="7 7 7" rotation="0 152 0" position="88.69 0 26.88" n-mesh-collider="type:environment;convex:false" geometry="buffer: false" bake-vertex-light></a-entity>
+<a-entity cached-obj-model="obj:url(tree.obj);mtl:url(tree.mtl)" scale="7 7 7" rotation="0 354 0" position="130.31 0 88.57" n-mesh-collider="type:environment;convex:false" geometry="buffer: false" bake-vertex-light></a-entity>
+<a-entity cached-obj-model="obj:url(tree.obj);mtl:url(tree.mtl)" scale="7 7 7" rotation="0 211 0" position="74.2 0 145.93" n-mesh-collider="type:environment;convex:false" geometry="buffer: false" bake-vertex-light></a-entity>
+<a-entity cached-obj-model="obj:url(tree.obj);mtl:url(tree.mtl)" scale="7 7 7" rotation="0 78 0" position="91.21 0 4.57" n-mesh-collider="type:environment;convex:false" geometry="buffer: false" bake-vertex-light></a-entity>
+<a-entity cached-obj-model="obj:url(tree.obj);mtl:url(tree.mtl)" scale="7 7 7" rotation="0 10 0" position="126.35 0 25.24" n-mesh-collider="type:environment;convex:false" geometry="buffer: false" bake-vertex-light></a-entity>
+<a-entity cached-obj-model="obj:url(tree.obj);mtl:url(tree.mtl)" scale="7 7 7" rotation="0 0 0" position="124.33 0 -55.94" n-mesh-collider="type:environment;convex:false" geometry="buffer: false" bake-vertex-light></a-entity>
+<a-entity cached-obj-model="obj:url(tree.obj);mtl:url(tree.mtl)" scale="7 7 7" rotation="0 178 0" position="119.72 0 -107.31" n-mesh-collider="type:environment;convex:false" geometry="buffer: false" bake-vertex-light></a-entity>
+<a-entity cached-obj-model="obj:url(tree.obj);mtl:url(tree.mtl)" scale="7 7 7" rotation="0 245 0" position="119.72 0 -107.31" n-mesh-collider="type:environment;convex:false" geometry="buffer: false" bake-vertex-light></a-entity>
+<a-entity cached-obj-model="obj:url(tree.obj);mtl:url(tree.mtl)" scale="7 7 7" rotation="0 14 0" position="119.72 0 -107.31" n-mesh-collider="type:environment;convex:false" geometry="buffer: false" bake-vertex-light></a-entity>
+<a-entity cached-obj-model="obj:url(tree.obj);mtl:url(tree.mtl)" scale="7 7 7" rotation="0 95 0" position="36.62 0 -127.13" n-mesh-collider="type:environment;convex:false" geometry="buffer: false" bake-vertex-light></a-entity>
+<a-entity cached-obj-model="obj:url(tree.obj);mtl:url(tree.mtl)" scale="7 7 7" rotation="0 54 0" position="-72.17 0 -129.67" n-mesh-collider="type:environment;convex:false" geometry="buffer: false" bake-vertex-light></a-entity>
+<a-entity cached-obj-model="obj:url(tree.obj);mtl:url(tree.mtl)" scale="7 7 7" rotation="0 34 0" position="-137.21 0 -99.57" n-mesh-collider="type:environment;convex:false" geometry="buffer: false" bake-vertex-light></a-entity>
+<a-entity cached-obj-model="obj:url(tree.obj);mtl:url(tree.mtl)" scale="7 7 7" rotation="0 212 0" position="-101.55 0 -73.97" n-mesh-collider="type:environment;convex:false" geometry="buffer: false" bake-vertex-light></a-entity>
+<a-entity cached-obj-model="obj:url(tree.obj);mtl:url(tree.mtl)" scale="7 7 7" rotation="0 325 0" position="-129.22 0 -54.04" n-mesh-collider="type:environment;convex:false" geometry="buffer: false" bake-vertex-light></a-entity>
+<a-entity cached-obj-model="obj:url(tree.obj);mtl:url(tree.mtl)" scale="7 7 7" rotation="0 0 0" position="-124.23 0 -12.53" n-mesh-collider="type:environment;convex:false" geometry="buffer: false" bake-vertex-light></a-entity>
+<a-entity cached-obj-model="obj:url(tree.obj);mtl:url(tree.mtl)" scale="7 7 7" rotation="0 48 0" position="-81.71 0 -11.04" n-mesh-collider="type:environment;convex:false" geometry="buffer: false" bake-vertex-light></a-entity>
+<a-entity cached-obj-model="obj:url(tree.obj);mtl:url(tree.mtl)" scale="7 7 7" rotation="0 179 0" position="-56.44 0 18.14" n-mesh-collider="type:environment;convex:false" geometry="buffer: false" bake-vertex-light></a-entity>
+<a-entity cached-obj-model="obj:url(tree.obj);mtl:url(tree.mtl)" scale="7 7 7" rotation="0 245 0" position="-92.7 0 58.88" n-mesh-collider="type:environment;convex:false" geometry="buffer: false" bake-vertex-light></a-entity>
+<a-entity cached-obj-model="obj:url(tree.obj);mtl:url(tree.mtl)" scale="7 7 7" rotation="0 340 0" position="-47.09 0 93.42" n-mesh-collider="type:environment;convex:false" geometry="buffer: false" bake-vertex-light></a-entity>
+<a-entity cached-obj-model="obj:url(tree.obj);mtl:url(tree.mtl)" scale="7 7 7" rotation="0 45 0" position="-22.11 0 57.57" n-mesh-collider="type:environment;convex:false" geometry="buffer: false" bake-vertex-light></a-entity>
+
+<a-entity cached-obj-model="obj:url(tree.obj);mtl:url(tree.mtl)" scale="9 9 9" rotation="0 175 0" position="42.67 0 88.63" n-mesh-collider="type:environment;convex:false" geometry="buffer: false" bake-vertex-light></a-entity>
+<a-entity cached-obj-model="obj:url(tree.obj);mtl:url(tree.mtl)" scale="9 9 9" rotation="0 245 0" position="19.61 0 101.47" n-mesh-collider="type:environment;convex:false" geometry="buffer: false" bake-vertex-light></a-entity>
+<a-entity cached-obj-model="obj:url(tree.obj);mtl:url(tree.mtl)" scale="9 9 9" rotation="0 300 0" position="-9.52 0 97.37" n-mesh-collider="type:environment;convex:false" geometry="buffer: false" bake-vertex-light></a-entity>
+<a-entity cached-obj-model="obj:url(tree.obj);mtl:url(tree.mtl)" scale="9 9 9" rotation="0 124 0" position="-65.89 0 44.52" n-mesh-collider="type:environment;convex:false" geometry="buffer: false" bake-vertex-light></a-entity>
+<a-entity cached-obj-model="obj:url(tree.obj);mtl:url(tree.mtl)" scale="9 9 9" rotation="0 0 0" position="-95.36 0 15.47" n-mesh-collider="type:environment;convex:false" geometry="buffer: false" bake-vertex-light></a-entity>
+<a-entity cached-obj-model="obj:url(tree.obj);mtl:url(tree.mtl)" scale="9 9 9" rotation="0 46 0" position="-107.32 0 -36.24" n-mesh-collider="type:environment;convex:false" geometry="buffer: false" bake-vertex-light></a-entity>
+<a-entity cached-obj-model="obj:url(tree.obj);mtl:url(tree.mtl)" scale="9 9 9" rotation="0 175 0" position="-57.83 0 -78.37" n-mesh-collider="type:environment;convex:false" geometry="buffer: false" bake-vertex-light></a-entity>
+<a-entity cached-obj-model="obj:url(tree.obj);mtl:url(tree.mtl)" scale="9 9 9" rotation="0 245 0" position="-102.25 0 -146.9" n-mesh-collider="type:environment;convex:false" geometry="buffer: false" bake-vertex-light></a-entity>
+<a-entity cached-obj-model="obj:url(tree.obj);mtl:url(tree.mtl)" scale="9 9 9" rotation="0 45 0" position="-131.29 0 -126.58" n-mesh-collider="type:environment;convex:false" geometry="buffer: false" bake-vertex-light></a-entity>
+<a-entity cached-obj-model="obj:url(tree.obj);mtl:url(tree.mtl)" scale="9 9 9" rotation="0 320 0" position="2.77 0 -145.38" n-mesh-collider="type:environment;convex:false" geometry="buffer: false" bake-vertex-light></a-entity>
+<a-entity cached-obj-model="obj:url(tree.obj);mtl:url(tree.mtl)" scale="9 9 9" rotation="0 47 0" position="55.33 0 -142.52" n-mesh-collider="type:environment;convex:false" geometry="buffer: false" bake-vertex-light></a-entity>
+<a-entity cached-obj-model="obj:url(tree.obj);mtl:url(tree.mtl)" scale="9 9 9" rotation="0 95 0" position="44.68 0 -101.66" n-mesh-collider="type:environment;convex:false" geometry="buffer: false" bake-vertex-light></a-entity>
+<a-entity cached-obj-model="obj:url(tree.obj);mtl:url(tree.mtl)" scale="9 9 9" rotation="0 67 0" position="79 0 -101.24" n-mesh-collider="type:environment;convex:false" geometry="buffer: false" bake-vertex-light></a-entity>
+<a-entity cached-obj-model="obj:url(tree.obj);mtl:url(tree.mtl)" scale="9 9 9" rotation="0 240 0" position="94.77 0 -125.08" n-mesh-collider="type:environment;convex:false" geometry="buffer: false" bake-vertex-light></a-entity>
+<a-entity cached-obj-model="obj:url(tree.obj);mtl:url(tree.mtl)" scale="9 9 9" rotation="0 320 0" position="72.57 0 -45.44" n-mesh-collider="type:environment;convex:false" geometry="buffer: false" bake-vertex-light></a-entity>
+<a-entity cached-obj-model="obj:url(tree.obj);mtl:url(tree.mtl)" scale="9 9 9" rotation="0 90 0" position="108.59 0 -30.97" n-mesh-collider="type:environment;convex:false" geometry="buffer: false" bake-vertex-light></a-entity>
+<a-entity cached-obj-model="obj:url(tree.obj);mtl:url(tree.mtl)" scale="9 9 9" rotation="0 0 0" position="133.52 0 -16.35" n-mesh-collider="type:environment;convex:false" geometry="buffer: false" bake-vertex-light></a-entity>
+<a-entity cached-obj-model="obj:url(tree.obj);mtl:url(tree.mtl)" scale="9 9 9" rotation="0 200 0" position="139.1 0 9.32" n-mesh-collider="type:environment;convex:false" geometry="buffer: false" bake-vertex-light></a-entity>
+<a-entity cached-obj-model="obj:url(tree.obj);mtl:url(tree.mtl)" scale="9 9 9" rotation="0 100 0" position="138.15 0 56.67" n-mesh-collider="type:environment;convex:false" geometry="buffer: false" bake-vertex-light></a-entity>
+<a-entity cached-obj-model="obj:url(tree.obj);mtl:url(tree.mtl)" scale="9 9 9" rotation="0 45 0" position="55.17 0 47.17" n-mesh-collider="type:environment;convex:false" geometry="buffer: false" bake-vertex-light></a-entity>
+<a-entity cached-obj-model="obj:url(tree.obj);mtl:url(tree.mtl)" scale="9 9 9" rotation="0 96 0" position="-138.43 0 120.42" n-mesh-collider="type:environment;convex:false" geometry="buffer: false" bake-vertex-light></a-entity>
+<a-entity cached-obj-model="obj:url(tree.obj);mtl:url(tree.mtl)" scale="9 9 9" rotation="0 258 0" position="-95.76 0 156.9" n-mesh-collider="type:environment;convex:false" geometry="buffer: false" geometry="buffer: false" geometry="buffer: false" bake-vertex-light></a-entity>
+
+<a-entity position="0 0 140">
+<a-entity id="sound1" position="0 0 0" n-sound="src: sa.wav; loop: true; autoplay: true; volume: 0.2; rolloff: linear; minDistance: 130; maxDistance: 145"></a-entity>
+<!--a-sphere color="blue" position="0 0 0" radius="145"></a-sphere-->
+</a-entity>
+<a-entity position="140 0 0">
+<a-entity id="sound1" position="0 0 0" n-sound="src: sa.wav; loop: true; autoplay: true; volume: 0.2; rolloff: linear; minDistance: 100; maxDistance: 115"></a-entity>
+<!--a-sphere color="blue" position="0 0 0" radius="115"></a-sphere-->
+</a-entity>
+<a-entity position="-140 0 0">
+<a-entity id="sound1" position="0 0 0" n-sound="src: sa.wav; loop: true; autoplay: true; volume: 0.2; rolloff: linear; minDistance: 100; maxDistance: 115"></a-entity>
+<!--a-sphere color="blue" position="0 0 0" radius="115"></a-sphere-->
+</a-entity>
+<a-entity position="0 0 -240">
+<a-entity id="sound1" position="0 0 0" n-sound="src: sa.wav; loop: true; autoplay: true; volume: 0.2; rolloff: linear; minDistance: 100; maxDistance: 185"></a-entity>
+<!--a-sphere color="blue" position="0 0 0" radius="185"></a-sphere-->
+</a-entity>
+
+      </a-entity>
+
+      <a-entity id="moon" position="-500 700 450" rotation="0 -90 0"></a-entity>
+      <a-entity cached-obj-model="obj: url(moon.obj); mtl: url(moon.mtl)" scale="30 30 30" position="-500 699.9 450" rotation="0 135 0" n-mesh-collider="type: environment; convex: false"></a-entity>
+      <a-entity position="-505 702.01 455" rotation="0 135 0" scale="5 5 5" n-layout-browser="url: http://duckluck.net/portal/; isEnclosure:true"></a-entity>
+      <a-entity position="-180 1 -180" n-portal="targetEntity: #moon"></a-entity>
+      <a-entity position="-500 0 454" n-portal="targetSpace: experience-space-665506000857464982" ></a-entity>
+
+      <a-sky radius="1050" rotation="-25" src="#sky" segments-width="16" segments-height="16"></a-sky>
+
+  </a-scene>
+  <script>
+
+  document.querySelector('#door6open').addEventListener('go', function () {
+    document.getElementById('duck').click();
+  });
+  
+  </script>
+  <a id="duck" href="altspace://account.altvr.com/api/events/665506000857464982"></a>
+  </body>
+</html>
